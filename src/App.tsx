@@ -1,25 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CircuitBreaker from './components/CircuitBreaker';
+import Transformer2 from './components/Transformer2';
+import Transformer3 from './components/Transformer3';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CircuitBreaker />
+      <Transformer2 />
+      <Transformer3 />
+    </>
   );
 }
 
