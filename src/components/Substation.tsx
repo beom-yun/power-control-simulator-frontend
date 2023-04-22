@@ -1,48 +1,86 @@
-import { Box } from '@chakra-ui/react';
+import { Box, HStack, Spacer, Stack, VStack } from '@chakra-ui/react';
 import CircuitBreaker from './CircuitBreaker';
 import Disconnector from './Disconnector';
 import Transformer2 from './Transformer2';
 import Transformer3 from './Transformer3';
+import HighSpeedCircuitBreaker from './HighSpeedCircuitBreaker';
+import Rectifier from './Rectifier';
 
 export default function Substation() {
   return (
-    <Box w="1440px" h="810px" border="1px">
-      {/* <Box w={0} h="40px" border="1px" pos="absolute" left={379} top={2} /> */}
-
-      <Box display="flex" justifyContent="space-around" mt="40px">
+    <VStack w="1440px" h="810px" border="1px">
+      <HStack w="100%" justifyContent="space-around" pt="40px">
         <Disconnector />
         <Disconnector />
         <Disconnector />
-      </Box>
-      <Box display="flex" justifyContent="space-around" mt="10px">
+      </HStack>
+      <HStack w="100%" justifyContent="space-around" pt="0px">
         <CircuitBreaker />
         <CircuitBreaker />
         <CircuitBreaker />
-      </Box>
+      </HStack>
 
-      <Box display="flex" justifyContent="space-around" mt="50px">
-        <Box display="flex" w="100%" justifyContent="space-around" ml="60px" mr="30px">
+      <HStack w="100%" justifyContent="space-around" pt="30px">
+        <HStack w="100%" justifyContent="space-around" pl="60px" pr="30px">
           <CircuitBreaker />
           <CircuitBreaker />
           <CircuitBreaker />
-        </Box>
-        <Box display="flex" w="70%" justifyContent="space-around" ml="30px" mr="60px">
+        </HStack>
+        <HStack w="70%" justifyContent="space-around" pl="30px" pr="60px">
           <CircuitBreaker />
           <CircuitBreaker />
-        </Box>
-      </Box>
+        </HStack>
+      </HStack>
 
-      <Box display="flex" justifyContent="space-around" mt="40px">
-        <Box display="flex" w="100%" justifyContent="space-around" ml="60px" mr="30px">
+      <HStack w="100%" justifyContent="space-around" pt="30px">
+        <HStack w="100%" justifyContent="space-around" pl="60px" pr="30px">
           <Transformer3 />
           <Transformer3 />
           <Transformer3 />
-        </Box>
-        <Box display="flex" w="70%" justifyContent="space-around" ml="30px" mr="60px">
+        </HStack>
+        <HStack w="70%" justifyContent="space-around" pl="30px" pr="60px">
           <Transformer2 />
           <Transformer2 />
-        </Box>
-      </Box>
-    </Box>
+        </HStack>
+      </HStack>
+
+      <HStack w="100%" justifyContent="space-around" pt="30px">
+        <HStack w="100%" justifyContent="space-around" pl="60px" pr="30px">
+          <Rectifier />
+          <Rectifier />
+          <Rectifier />
+        </HStack>
+        <HStack w="70%" justifyContent="space-around" pl="30px" pr="60px">
+          <CircuitBreaker />
+          <CircuitBreaker />
+        </HStack>
+      </HStack>
+
+      <HStack w="100%" justifyContent="space-around" pt="30px">
+        <HStack w="100%" justifyContent="space-around" pl="60px" pr="30px">
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+        </HStack>
+        <HStack w="70%" justifyContent="space-around" pl="30px" pr="60px">
+          <CircuitBreaker />
+        </HStack>
+      </HStack>
+
+      <HStack w="100%" justifyContent="space-around" pt="30px">
+        <HStack w="100%" justifyContent="space-around" pl="120px" pr="120px">
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+          <HighSpeedCircuitBreaker />
+        </HStack>
+        <HStack w="70%" justifyContent="space-around" pl="30px" pr="60px">
+          <CircuitBreaker />
+          <CircuitBreaker />
+          <CircuitBreaker />
+        </HStack>
+      </HStack>
+    </VStack>
   );
 }
