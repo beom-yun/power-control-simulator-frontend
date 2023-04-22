@@ -16,7 +16,6 @@ export default function Transformer3() {
       >
         <Text fontWeight="bold">D</Text>
       </Box>
-      {/* <Box> */}
       <Box
         w={12}
         h={12}
@@ -24,7 +23,6 @@ export default function Transformer3() {
         borderRadius="50%"
         pos="absolute"
         top={9}
-        left={9}
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -38,13 +36,13 @@ export default function Transformer3() {
         borderRadius="50%"
         pos="absolute"
         top={9}
+        left={9}
         display="flex"
         justifyContent="center"
         alignItems="center"
       >
         <Text fontWeight="bold">Y</Text>
       </Box>
-      {/* </Box> */}
     </Box>
   );
 }

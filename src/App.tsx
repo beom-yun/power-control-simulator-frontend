@@ -1,15 +1,7 @@
-import CircuitBreaker from './components/CircuitBreaker';
-import Transformer2 from './components/Transformer2';
-import Transformer3 from './components/Transformer3';
+import Substation from './components/Substation';
 
 function App() {
-  return (
-    <>
-      <CircuitBreaker />
-      <Transformer2 />
-      <Transformer3 />
-    </>
-  );
+  return <Substation />;
 }
 
 export default App;
