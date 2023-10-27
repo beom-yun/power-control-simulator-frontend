@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Drawer,
@@ -16,6 +17,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { FaLock, FaUser } from 'react-icons/fa6';
+import useUser from '../lib/useUser';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { logIn, logOut } from '../api';
+import { useForm } from 'react-hook-form';
+import { ILogInVariables } from '../types';
 
 interface ILeftDrawerProps {
   isOpen: boolean;
@@ -23,6 +29,43 @@ interface ILeftDrawerProps {
 }
 
 export default function LeftDrawer({ isOpen, onClose }: ILeftDrawerProps) {
+  const queryClient = useQueryClient();
+  const { userLoading, user, isLoggedIn } = useUser();
+  const { register, handleSubmit, reset } = useForm<ILogInVariables>();
+  const logInMutation = useMutation({
+    mutationFn: logIn,
+    onMutate: () => {
+      console.log('login pending...');
+    },
+    onSuccess: () => {
+      console.log('login success');
+      queryClient.refetchQueries({ queryKey: ['me'] });
+      reset();
+    },
+    onError: () => {
+      console.log('login error');
+    },
+  });
+  const logOutMutation = useMutation({
+    mutationFn: logOut,
+    onMutate: () => {
+      console.log('logout pending...');
+    },
+    onSuccess: () => {
+      console.log('logout success');
+      queryClient.refetchQueries({ queryKey: ['me'] });
+    },
+    onError: () => {
+      console.log('logout error');
+    },
+  });
+  const onLogIn = ({ username, password }: ILogInVariables) => {
+    logInMutation.mutate({ username, password });
+  };
+  const onLogOut = () => {
+    logOutMutation.mutate();
+  };
+
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="left">
       <DrawerOverlay />
@@ -37,29 +80,52 @@ export default function LeftDrawer({ isOpen, onClose }: ILeftDrawerProps) {
         </DrawerHeader>
 
         <DrawerBody>
-          <VStack py={5}>
-            <InputGroup size={'md'}>
-              <InputLeftElement
-                children={
-                  <Box color="gray.500">
-                    <FaUser />
-                  </Box>
-                }
-              />
-              <Input variant={'outline'} placeholder="아이디" />
-            </InputGroup>
-            <InputGroup size={'md'}>
-              <InputLeftElement
-                children={
-                  <Box color="gray.500">
-                    <FaLock />
-                  </Box>
-                }
-              />
-              <Input type="password" variant={'outline'} placeholder="비밀번호" />
-            </InputGroup>
-            <Button w={'100%'}>로그인</Button>
-          </VStack>
+          {userLoading ? null : isLoggedIn ? (
+            <VStack py={5} spacing={0}>
+              <Avatar src={user?.avatar} name={user?.name} size={'2xl'} />
+              <Text fontSize={'2xl'} fontWeight={'bold'} mt={4}>
+                {user?.name}
+              </Text>
+              <Text fontSize={'xl'}>{user?.email}</Text>
+              <Button w={'100%'} mt={5} mb={2}>
+                마이페이지
+              </Button>
+              <Button w={'100%'} isLoading={logOutMutation.isPending} onClick={onLogOut}>
+                로그아웃
+              </Button>
+            </VStack>
+          ) : (
+            <VStack as="form" onSubmit={handleSubmit(onLogIn)} py={5}>
+              <InputGroup size={'md'}>
+                <InputLeftElement
+                  children={
+                    <Box color="gray.500">
+                      <FaUser />
+                    </Box>
+                  }
+                />
+                <Input variant={'outline'} placeholder="아이디" {...register('username', { required: true })} />
+              </InputGroup>
+              <InputGroup size={'md'}>
+                <InputLeftElement
+                  children={
+                    <Box color="gray.500">
+                      <FaLock />
+                    </Box>
+                  }
+                />
+                <Input
+                  type="password"
+                  variant={'outline'}
+                  placeholder="비밀번호"
+                  {...register('password', { required: true })}
+                />
+              </InputGroup>
+              <Button type="submit" w={'100%'} isLoading={logInMutation.isPending}>
+                로그인
+              </Button>
+            </VStack>
+          )}
         </DrawerBody>
 
         <DrawerFooter>

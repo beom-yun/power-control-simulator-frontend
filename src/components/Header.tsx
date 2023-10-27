@@ -2,8 +2,10 @@ import { Box, Button, HStack, Image, Text, useDisclosure } from '@chakra-ui/reac
 import { Link } from 'react-router-dom';
 import { FaBars, FaHouse, FaMoon } from 'react-icons/fa6';
 import LeftDrawer from './LeftDrawer';
+import useUser from '../lib/useUser';
 
 export default function Header() {
+  const { userLoading, user, isLoggedIn } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -26,6 +28,11 @@ export default function Header() {
         </Box>
       </HStack>
       <HStack spacing={0}>
+        {userLoading ? null : isLoggedIn ? (
+          <Text px={3} fontWeight={'bold'}>
+            {user?.name}
+          </Text>
+        ) : null}
         <Link to={'https://www.ictr.or.kr/main/'}>
           <Button size={'sm'} variant={'ghost'}>
             <FaHouse />
